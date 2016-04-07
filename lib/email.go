@@ -8,7 +8,7 @@ import (
 
 // SendArinEmail is used to send an Email using a template to Arin containing the
 // route update(s).
-func SendArinEmail(entry *ArinEntryFlat, t *template.Template) error {
+func SendArinEmail(entry *ArinFlatRouteEntry, t *template.Template) error {
 	if entry == nil {
 		return fmt.Errorf("Null entry provided. Cannot send email using nil entry.")
 	}

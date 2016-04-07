@@ -1,4 +1,4 @@
-// Copyright © 2016 Kevin Kirsche <kevin.kirsche@verizon.com> <kev.kirsche@gmail.com>
+// Copyright © 2016 Kevin Kirsche <kev.kirsche@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import (
 	"strconv"
 	"strings"
 
-	"ni.vzbi.com/stash/scm/ncsddos/irr.git/lib"
-
+	"github.com/kkirsche/arin-rr/lib"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -68,7 +67,7 @@ var withinCmd = &cobra.Command{
 
 This will print out what would be sent to ARIN with ASN 12345 and will submit
 all subnets including the /16 itself for a total of 255 possible submissions.
-To submit to ARIN, please use the --submit or -s flag. 
+To submit to ARIN, please use the --submit or -s flag.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		logger := irr.NewLogger(verbose)
@@ -146,8 +145,8 @@ To submit to ARIN, please use the --submit or -s flag.
 				)
 
 				logger.Verboseln("Flattening structure.")
-				forArin := irr.NewARINEntry(email, entry)
-				flatARINEntry := forArin.Flatten()
+				forArin := irr.NewARINRouteEntry(email, entry)
+				flatArinRouteEntry := forArin.Flatten()
 
 				logger.Verboseln("Validating ASN entry.")
 				if entry.ASN == 0 {
@@ -156,9 +155,9 @@ To submit to ARIN, please use the --submit or -s flag.
 				}
 
 				logger.Verboseln("Parsing output template.")
-				t := template.Must(template.New("ARINEntry").Parse(irr.ArinEntryTemplate))
+				t := template.Must(template.New("ArinRouteEntry").Parse(irr.ArinRouteEntryTemplate))
 				logger.Verboseln("Outputting template to stdout.\n")
-				err = t.Execute(os.Stdout, flatARINEntry)
+				err = t.Execute(os.Stdout, flatArinRouteEntry)
 				if err != nil {
 					fmt.Println(err.Error())
 					return
@@ -167,7 +166,7 @@ To submit to ARIN, please use the --submit or -s flag.
 
 				if viper.GetBool("general.submit") {
 					logger.Verboseln("Send email enabled. Connecting to SMTP server")
-					err := irr.SendArinEmail(flatARINEntry, t)
+					err := irr.SendArinEmail(flatArinRouteEntry, t)
 					if err != nil {
 						logger.Println(err.Error())
 						return

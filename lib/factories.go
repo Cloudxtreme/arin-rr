@@ -1,16 +1,16 @@
 package irr
 
-// Represents the data necessary to communicate an update to ARIN.
-func NewARINEntry(email Email, entry RouteRegistryEntry) *ArinEntry {
-	return &ArinEntry{
+// NewARINRouteEntry represents the data necessary to communicate an update to ARIN.
+func NewARINRouteEntry(email Email, entry RouteRegistryEntry) *ArinRouteEntry {
+	return &ArinRouteEntry{
 		Email: email,
 		Entry: entry,
 	}
 }
 
 // Flatten removes the layers withihn the structure.
-func (e *ArinEntry) Flatten() *ArinEntryFlat {
-	return &ArinEntryFlat{
+func (e *ArinRouteEntry) Flatten() *ArinFlatRouteEntry {
+	return &ArinFlatRouteEntry{
 		To:           e.Email.To,
 		From:         e.Email.From,
 		Subject:      e.Email.Subject,

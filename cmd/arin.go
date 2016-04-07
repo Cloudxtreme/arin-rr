@@ -1,4 +1,4 @@
-// Copyright © 2016 Kevin Kirsche <kevin.kirsche@verizon.com> <kev.kirsche@gmail.com>
+// Copyright © 2016 Kevin Kirsche <kev.kirsche@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import (
 	"os"
 	"time"
 
-	"ni.vzbi.com/stash/scm/ncsddos/irr.git/lib"
-
+	"github.com/kkirsche/arin-rr/lib"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -53,8 +52,8 @@ var arinCmd = &cobra.Command{
 		)
 
 		logger.Verboseln("Flattening structure.")
-		forArin := irr.NewARINEntry(email, entry)
-		flatARINEntry := forArin.Flatten()
+		forArin := irr.NewARINRouteEntry(email, entry)
+		flatArinRouteEntry := forArin.Flatten()
 
 		logger.Verboseln("Validating ASN entry.")
 		if entry.ASN == 0 {
@@ -63,9 +62,9 @@ var arinCmd = &cobra.Command{
 		}
 
 		logger.Verboseln("Parsing output template.")
-		t := template.Must(template.New("ARINEntry").Parse(irr.ArinEntryTemplate))
+		t := template.Must(template.New("ArinRouteEntry").Parse(irr.ArinRouteEntryTemplate))
 		logger.Verboseln("Outputting template to stdout.")
-		err := t.Execute(os.Stdout, flatARINEntry)
+		err := t.Execute(os.Stdout, flatArinRouteEntry)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -73,7 +72,7 @@ var arinCmd = &cobra.Command{
 
 		if viper.GetBool("general.submit") {
 			logger.Verboseln("Send email enabled. Connecting to SMTP server")
-			err := irr.SendArinEmail(flatARINEntry, t)
+			err := irr.SendArinEmail(flatArinRouteEntry, t)
 			if err != nil {
 				logger.Println(err.Error())
 				return

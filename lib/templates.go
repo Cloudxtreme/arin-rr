@@ -22,9 +22,9 @@ const (
 	// DefaultDescription the description for use in the email description
 	DefaultDescription = "Verizon Internet Services"
 
-	// ArinEntryTemplate is the template to execute when sending a new route
+	// ArinRouteEntryTemplate is the template to execute when sending a new route
 	// to ARIN
-	ArinEntryTemplate = "To: {{ .To }}\r\n" +
+	ArinRouteEntryTemplate = "To: {{ .To }}\r\n" +
 		"From: {{ .From }}\r\n" +
 		"Subject: {{ .Subject }}\r\n" +
 		"\r\n" +

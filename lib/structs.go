@@ -1,13 +1,13 @@
 package irr
 
-// ArinEntry constitutes an entry into ARIN's Route Registry
-type ArinEntry struct {
+// ArinRouteEntry constitutes an entry into ARIN's Route Registry
+type ArinRouteEntry struct {
 	Email Email
 	Entry RouteRegistryEntry
 }
 
-// ArinEntryFlat is the flat version of ArinEntry
-type ArinEntryFlat struct {
+// ArinFlatRouteEntry is the flat version of ArinRouteEntry
+type ArinFlatRouteEntry struct {
 	From         string
 	To           string
 	Subject      string
