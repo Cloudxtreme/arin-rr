@@ -18,16 +18,15 @@ import (
 	"fmt"
 	"html/template"
 	"os"
-	"time"
 
 	"github.com/kkirsche/arin-rr/lib"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-// arinCmd represents the arin command
-var arinCmd = &cobra.Command{
-	Use:   "arin",
+// routeCmd represents the arin command
+var routeCmd = &cobra.Command{
+	Use:   "route",
 	Short: "For modifying entries in ARIN's Internet Route Registry",
 	Long:  `Use to modify ARIN's route registry.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -84,13 +83,10 @@ var arinCmd = &cobra.Command{
 }
 
 func init() {
-	RootCmd.AddCommand(arinCmd)
-
-	today := time.Now().Format("20060102")
-	defaultChangedByEmail := fmt.Sprintf("%s %s", irr.DefaultChangedByEmail, today)
+	RootCmd.AddCommand(routeCmd)
 
 	// Email Related
-	RootCmd.PersistentFlags().StringP("from", "f", irr.DefaultFromEmail, "The email address to use as the 'from' email address.")
+	RootCmd.PersistentFlags().StringP("from", "f", "", "The email address to use as the 'from' email address.")
 	viper.BindPFlag("email.from", RootCmd.PersistentFlags().Lookup("from"))
 
 	RootCmd.PersistentFlags().StringP("to", "t", irr.DefaultToEmail, "The email address to use as the 'to' email address.")
@@ -99,26 +95,26 @@ func init() {
 	RootCmd.PersistentFlags().StringP("subject", "u", irr.DefaultSubject, "The subject line to use in the email.")
 	viper.BindPFlag("email.subject", RootCmd.PersistentFlags().Lookup("subject"))
 
-	RootCmd.PersistentFlags().StringP("smtp", "p", irr.DefaultSMTPServer, "The smtp server and port (server:port) to use when sending the email.")
+	RootCmd.PersistentFlags().StringP("smtp", "p", "", "The smtp server and port (server:port) to use when sending the email.")
 	viper.BindPFlag("email.smtp", RootCmd.PersistentFlags().Lookup("smtp"))
 
 	// The Route Registry Entry
 	RootCmd.PersistentFlags().StringP("route", "r", "", "The route which should be added to ARIN's route registry.")
 	viper.BindPFlag("arin.route", RootCmd.PersistentFlags().Lookup("route"))
 
-	RootCmd.PersistentFlags().StringP("desc", "d", irr.DefaultDescription, "The route description.")
+	RootCmd.PersistentFlags().StringP("desc", "d", "", "The route description.")
 	viper.BindPFlag("arin.description", RootCmd.PersistentFlags().Lookup("desc"))
 
 	RootCmd.PersistentFlags().IntP("asn", "a", 0, "The numeric ASN number whic the route will be advertised from.")
 	viper.BindPFlag("arin.asn", RootCmd.PersistentFlags().Lookup("asn"))
 
-	RootCmd.PersistentFlags().StringP("notify", "n", irr.DefaultNotifyEmail, "Email address to be notified of ARIN's response.")
+	RootCmd.PersistentFlags().StringP("notify", "n", "", "Email address to be notified of ARIN's response.")
 	viper.BindPFlag("arin.notify-email", RootCmd.PersistentFlags().Lookup("notify"))
 
-	RootCmd.PersistentFlags().StringP("maintained", "m", irr.DefaultMntBy, "Who should be noted as the maintainer")
+	RootCmd.PersistentFlags().StringP("maintained", "m", "", "Who should be noted as the maintainer")
 	viper.BindPFlag("arin.maintained-by", RootCmd.PersistentFlags().Lookup("maintained"))
 
-	RootCmd.PersistentFlags().StringP("changed", "g", defaultChangedByEmail, "Email address of who changed the entry")
+	RootCmd.PersistentFlags().StringP("changed", "g", "", "Email address of who changed the entry")
 	viper.BindPFlag("arin.changed-email", RootCmd.PersistentFlags().Lookup("changed"))
 
 	RootCmd.PersistentFlags().StringP("source", "o", irr.DefaultSource, "The source to use for the route registry entry")

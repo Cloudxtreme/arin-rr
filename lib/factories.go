@@ -36,11 +36,21 @@ func NewEmail(from, to, subject, smtpServer string) Email {
 }
 
 // NewRouteRegistryEntry returns a new ARIN route registry entry
-func NewRouteRegistryEntry(route, desc string, asn int, notifyEmail, maintBy, changeEmail, source string) RouteRegistryEntry {
+func NewRouteRegistryEntry(route, desc string, asn int, holes, memberOf,
+	inject, aggrMtd, aggrBndry, exportComps, components, remarks, notifyEmail,
+	maintBy, changeEmail, source string) RouteRegistryEntry {
 	return RouteRegistryEntry{
 		Route:        route,
 		Description:  desc,
 		ASN:          asn,
+		Holes:        holes,
+		MemberOf:     memberOf,
+		Inject:       inject,
+		AggrMtd:      aggrMtd,
+		AggrBndry:    aggrBndry,
+		ExportComps:  exportComps,
+		Components:   components,
+		Remarks:      remarks,
 		NotifyEmail:  notifyEmail,
 		MaintainedBy: maintBy,
 		ChangedEmail: changeEmail,

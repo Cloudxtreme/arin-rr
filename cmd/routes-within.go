@@ -186,7 +186,7 @@ To submit to ARIN, please use the --submit or -s flag.
 }
 
 func init() {
-	arinCmd.AddCommand(withinCmd)
+	routeCmd.AddCommand(withinCmd)
 
 	// Here you will define your flags and configuration settings.
 
