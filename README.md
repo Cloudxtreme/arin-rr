@@ -1,5 +1,7 @@
-# arin-rr
-Tool to update the ARIN Route Registry
+# Unofficial ARIN Route Registry Tool (arin-rr)
+Tool to update the ARIN Route Registry. Templates used are based on:
+
+https://www.arin.net/resources/routing/templates.html
 
 ## Installation
 

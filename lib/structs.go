@@ -26,6 +26,14 @@ type RouteRegistryEntry struct {
 	Route        string
 	Description  string
 	ASN          int
+	Holes        string
+	MemberOf     string
+	Inject       string
+	AggrMtd      string
+	AggrBndry    string
+	ExportComps  string
+	Components   string
+	Remarks      string
 	NotifyEmail  string
 	MaintainedBy string
 	ChangedEmail string
